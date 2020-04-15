@@ -6,8 +6,8 @@ namespace Tennis
 {
     internal class TennisGame1 : ITennisGame
     {
-        private int _mScore1;
-        private int _mScore2;
+        private int _player1Score;
+        private int _player2Score;
         private readonly string _player1Name;
         private readonly string _player2Name;
 
@@ -20,9 +20,9 @@ namespace Tennis
         public void WonPoint(string playerName)
         {
             if (_player1Name == playerName)
-                _mScore1 += 1;
+                _player1Score += 1;
             else
-                _mScore2 += 1;
+                _player2Score += 1;
         }
 
         public string GetScore()
@@ -37,13 +37,13 @@ namespace Tennis
                 return GetAdvantageSoring();
             }
 
-            return $"{GetPlayerSoring(_mScore1)}-{GetPlayerSoring(_mScore2)}";
+            return $"{GetPlayerSoring(_player1Score)}-{GetPlayerSoring(_player2Score)}";
         }
 
         private string GetAdvantageSoring()
         {
             string score = "";
-            var minusResult = _mScore1 - _mScore2;
+            var minusResult = _player1Score - _player2Score;
             if (minusResult == 1) score = $"Advantage {_player1Name}";
             else if (minusResult == -1) score = $"Advantage {_player2Name}";
             else if (minusResult >= 2) score = $"Win for {_player1Name}";
@@ -53,17 +53,17 @@ namespace Tennis
 
         private bool IsAdvantageSore()
         {
-            return _mScore1 >= 4 || _mScore2 >= 4;
+            return _player1Score >= 4 || _player2Score >= 4;
         }
 
         private bool IsEvenSore()
         {
-            return _mScore1 == _mScore2;
+            return _player1Score == _player2Score;
         }
 
         private string GetEvenSoring()
         {
-            switch (_mScore1)
+            switch (_player1Score)
             {
                 case 0:
                     return "Love-All";
