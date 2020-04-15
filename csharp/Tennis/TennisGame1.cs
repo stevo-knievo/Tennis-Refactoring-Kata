@@ -63,35 +63,26 @@ namespace Tennis
 
         private string GetEvenSoring()
         {
-            switch (_player1Score)
+            return _player1Score switch
             {
-                case 0:
-                    return "Love-All";
-                case 1:
-                    return "Fifteen-All";
-                case 2:
-                    return "Thirty-All";
-                default:
-                    return "Deuce";
-            }
+                0 => "Love-All",
+                1 => "Fifteen-All",
+                2 => "Thirty-All",
+                _ => "Deuce"
+            };
         }
 
 
         private string GetPlayerSoring(int score)
         {
-            switch (score)
+            return score switch
             {
-                case 0:
-                    return "Love";
-                case 1:
-                    return "Fifteen";
-                case 2:
-                    return "Thirty";
-                case 3:
-                    return "Forty";
-                default:
-                    throw new ArgumentException($"Should never reach is point. Give score is more then 3. Given score was: {score}");
-            }
+                0 => "Love",
+                1 => "Fifteen",
+                2 => "Thirty",
+                3 => "Forty",
+                _ => throw new ArgumentException($"Should never reach is point. Give score is more then 3. Given score was: {score}")
+            };
         }
     }
 }
