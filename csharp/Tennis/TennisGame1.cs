@@ -1,3 +1,7 @@
+using System;
+using NUnit.Framework;
+using NUnit.Framework.Internal;
+
 namespace Tennis
 {
     internal class TennisGame1 : ITennisGame
@@ -23,64 +27,71 @@ namespace Tennis
 
         public string GetScore()
         {
+            if (IsEvenSore())
+            {
+                return GetEvenSoring();
+            }
+
+            if (IsAdvantageSore())
+            {
+                return GetAdvantageSoring();
+            }
+
+            return $"{GetPlayerSoring(_mScore1)}-{GetPlayerSoring(_mScore2)}";
+        }
+
+        private string GetAdvantageSoring()
+        {
             string score = "";
-            var tempScore = 0;
-            if (_mScore1 == _mScore2)
-            {
-                switch (_mScore1)
-                {
-                    case 0:
-                        score = "Love-All";
-                        break;
-                    case 1:
-                        score = "Fifteen-All";
-                        break;
-                    case 2:
-                        score = "Thirty-All";
-                        break;
-                    default:
-                        score = "Deuce";
-                        break;
-                }
-            }
-            else if (_mScore1 >= 4 || _mScore2 >= 4)
-            {
-                var minusResult = _mScore1 - _mScore2;
-                if (minusResult == 1) score = $"Advantage {_player1Name}";
-                else if (minusResult == -1) score = $"Advantage {_player2Name}";
-                else if (minusResult >= 2) score = $"Win for {_player1Name}";
-                else score = $"Win for {_player2Name}";
-            }
-            else
-            {
-                for (var i = 1; i < 3; i++)
-                {
-                    if (i == 1) tempScore = _mScore1;
-                    else
-                    {
-                        score += "-";
-                        tempScore = _mScore2;
-                    }
-
-                    switch (tempScore)
-                    {
-                        case 0:
-                            score += "Love";
-                            break;
-                        case 1:
-                            score += "Fifteen";
-                            break;
-                        case 2:
-                            score += "Thirty";
-                            break;
-                        case 3:
-                            score += "Forty";
-                            break;
-                    }
-                }
-            }
-
+            var minusResult = _mScore1 - _mScore2;
+            if (minusResult == 1) score = $"Advantage {_player1Name}";
+            else if (minusResult == -1) score = $"Advantage {_player2Name}";
+            else if (minusResult >= 2) score = $"Win for {_player1Name}";
+            else score = $"Win for {_player2Name}";
             return score;
+        }
+
+        private bool IsAdvantageSore()
+        {
+            return _mScore1 >= 4 || _mScore2 >= 4;
+        }
+
+        private bool IsEvenSore()
+        {
+            return _mScore1 == _mScore2;
+        }
+
+        private string GetEvenSoring()
+        {
+            switch (_mScore1)
+            {
+                case 0:
+                    return "Love-All";
+                case 1:
+                    return "Fifteen-All";
+                case 2:
+                    return "Thirty-All";
+                default:
+                    return "Deuce";
+            }
+        }
+
+
+        private string GetPlayerSoring(int score)
+        {
+            switch (score)
+            {
+                case 0:
+                    return "Love";
+                case 1:
+                    return "Fifteen";
+                case 2:
+                    return "Thirty";
+                case 3:
+                    return "Forty";
+                default:
+                    throw new ArgumentException($"Should never reach is point. Give score is more then 3. Given score was: {score}");
+            }
         }
     }
 }
