@@ -1,6 +1,4 @@
 using System;
-using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 namespace Tennis
 {
@@ -27,17 +25,9 @@ namespace Tennis
 
         public string GetScore()
         {
-            if (IsEvenSore())
-            {
-                return GetEvenSoring();
-            }
+            if (IsEvenSore()) return GetEvenSoring();
 
-            if (IsAdvantageSore())
-            {
-                return GetAdvantageSoring();
-            }
-
-            return $"{GetPlayerSoring(_player1Score)}-{GetPlayerSoring(_player2Score)}";
+            return IsAdvantageSore() ? GetAdvantageSoring() : $"{GetPlayerSoring(_player1Score)}-{GetPlayerSoring(_player2Score)}";
         }
 
         private bool IsAdvantageSore()
