@@ -25,17 +25,17 @@ namespace Tennis
 
         public string GetScore()
         {
-            if (IsEvenSore()) return GetEvenSoring();
+            if (IsEvenScore()) return GetEvenSoring();
 
-            return IsAdvantageSore() ? GetAdvantageSoring() : $"{GetPlayerSoring(_player1Score)}-{GetPlayerSoring(_player2Score)}";
+            return IsAdvantageScore() ? GetAdvantageSoring() : $"{GetPlayerSoring(_player1Score)}-{GetPlayerSoring(_player2Score)}";
         }
 
-        private bool IsAdvantageSore()
+        private bool IsAdvantageScore()
         {
             return _player1Score >= 4 || _player2Score >= 4;
         }
 
-        private bool IsEvenSore()
+        private bool IsEvenScore()
         {
             return _player1Score == _player2Score;
         }
